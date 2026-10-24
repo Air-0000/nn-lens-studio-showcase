@@ -10,13 +10,13 @@
 
 ## 下载
 
-桌面安装包在 [Releases](https://github.com/Air-0000/nn-lens-studio-showcase/releases) 页面发布。当前为 **1.0.0 预发布版**，各平台的验证范围见下文和发布说明。
+桌面安装包在 [Releases](https://github.com/Air-0000/nn-lens-studio-showcase/releases) 页面发布。当前为 **1.0.0 预发布版**，最新一版是 [v1.0.0-preview.2](https://github.com/Air-0000/nn-lens-studio-showcase/releases/tag/v1.0.0-preview.2)。各平台的验证范围见下文和发布说明。
 
 | 平台 | 文件 | 系统要求 |
 | --- | --- | --- |
 | macOS（Apple 芯片与 Intel 通用） | `NN-Lens-Studio_1.0.0_macos-universal.dmg` | macOS 12 或更高 |
 | Windows x64 | `NN-Lens-Studio_1.0.0_x64-setup.exe` | Windows 10 / 11，需要 Microsoft Edge WebView2 运行时（缺少时安装器会从微软下载） |
-| Linux x86_64 | `NN-Lens-Studio_1.0.0_amd64.deb`（构建测试中，稍后补充） | Ubuntu 22.04+ / Debian 12+ |
+| Linux x86_64 | 暂未提供：安装包已能构建，但还没有通过启动验证 | Ubuntu 22.04+ / Debian 12+ |
 | Linux ARM64 | `NN-Lens-Studio_1.0.0_arm64.deb` | Ubuntu 22.04+ / Debian 12+ |
 
 公开版不含 AIC 多模态检测器的结构摘要和激活快照，模板里的 AIC 入口会提示这一点。其余功能与下文描述一致，全部在本机离线运行，不需要联网。
@@ -25,7 +25,7 @@
 
 - **macOS**：打开 dmg，把 NN Lens Studio 拖进“应用程序”。安装包为 ad-hoc 签名，未经 Apple 公证。首次打开若被拦截，到“系统设置 → 隐私与安全性”点“仍要打开”。
 - **Windows**：运行安装程序，按当前用户安装。安装程序没有 Authenticode 签名，Windows 会提示“未知发布者”。
-- **Linux**：`sudo apt install ./NN-Lens-Studio_1.0.0_amd64.deb`（ARM 设备用 arm64 包）。
+- **Linux（ARM64）**：`sudo apt install ./NN-Lens-Studio_1.0.0_arm64.deb`。
 
 ### 校验文件
 
@@ -36,6 +36,11 @@ shasum -a 256 -c SHA256SUMS --ignore-missing
 ```
 
 Windows PowerShell：`Get-FileHash .\NN-Lens-Studio_1.0.0_x64-setup.exe -Algorithm SHA256`，与 `SHA256SUMS` 中的值比对。
+
+### 更新记录
+
+- **v1.0.0-preview.2**：修复 macOS 上离开“运行轨迹诊断”后构建区可能保持空白的问题；桌面版的“打开合成示例”现在可以载入示例轨迹；视图切换按钮从启动起即以开关按钮提供给辅助功能工具。
+- **v1.0.0-preview.1**：首个桌面预发布版（macOS、Windows、Linux ARM64）。
 
 ### 已知限制
 
@@ -53,6 +58,7 @@ Windows PowerShell：`Get-FileHash .\NN-Lens-Studio_1.0.0_x64-setup.exe -Algorit
 - **处理不同任务**：分类、目标检测与图像分割，支持手写数字和合成图形数据。
 - **保存工作**：具名本机草稿、结构与布局 JSON 导入/导出。草稿不包含训练权重。
 - **观察结构**：2D 构建与 3D 检查，支持节点拖动、缩放和平移。
+- **运行轨迹诊断**：查看同一模型两次前向的逐模块差异（余弦相似度与相对扰动），找出差异从哪一层开始放大。附带一份合成示例轨迹；生成轨迹的 Python 追踪器目前不公开。
 
 ## 工作空间
 
