@@ -60,6 +60,8 @@ Windows PowerShell：`Get-FileHash .\NN-Lens-Studio_1.0.0_x64-setup.exe -Algorit
 - **观察结构**：2D 构建与 3D 检查，支持节点拖动、缩放和平移。
 - **运行轨迹诊断**：查看同一模型两次前向的逐模块差异（余弦相似度与相对扰动），找出差异从哪一层开始放大。附带一份合成示例轨迹；生成轨迹的 Python 追踪器目前不公开。
 
+![运行轨迹诊断：安装包自带的合成示例，右侧是选中调用的逐行余弦分布与 LayerNorm 分解](assets/diagnosis.png)
+
 ## 工作空间
 
 | 区域 | 用途 |
