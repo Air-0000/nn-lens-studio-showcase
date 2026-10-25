@@ -10,7 +10,7 @@
 
 ## 下载
 
-桌面安装包在 [Releases](https://github.com/Air-0000/nn-lens-studio-showcase/releases) 页面发布。当前为 **1.0.0 预发布版**，最新一版是 [v1.0.0-preview.2](https://github.com/Air-0000/nn-lens-studio-showcase/releases/tag/v1.0.0-preview.2)。各平台的验证范围见下文和发布说明。
+桌面安装包在 [Releases](https://github.com/Air-0000/nn-lens-studio-showcase/releases) 页面发布。当前为 **1.0.0 预发布版**，最新一版是 [v1.0.0-preview.3](https://github.com/Air-0000/nn-lens-studio-showcase/releases/tag/v1.0.0-preview.3)。各平台的验证范围见下文和发布说明。
 
 | 平台 | 文件 | 系统要求 |
 | --- | --- | --- |
@@ -39,11 +39,13 @@ Windows PowerShell：`Get-FileHash .\NN-Lens-Studio_1.0.0_x64-setup.exe -Algorit
 
 ### 更新记录
 
+- **v1.0.0-preview.3**：新增数据集审计工作区（多模态检测测试集的逐框对撞、人工核验与导出）、逐步演算（推理与单步训练的逐项重放）和 PyTorch 代码导出 / nn-lens-ir 导入；文件拖放改由页面处理。
 - **v1.0.0-preview.2**：修复 macOS 上离开“运行轨迹诊断”后构建区可能保持空白的问题；桌面版的“打开合成示例”现在可以载入示例轨迹；视图切换按钮从启动起即以开关按钮提供给辅助功能工具；首次提供 Linux x86_64 包。
 - **v1.0.0-preview.1**：首个桌面预发布版（macOS、Windows、Linux ARM64）。
 
 ### 已知限制
 
+- 数据集审计在桌面版里通过系统文件夹对话框或把文件夹拖进窗口读取图片；安装包测试只覆盖了打开和关闭这个工作区，还没有在安装包里实际选取或拖入过文件夹。
 - Windows 安装包在 Linux 上交叉编译，只做过文件级检查（x64 PE、GUI 子系统、WebView2 加载器、NSIS 结构），尚未在 Windows 实机上安装和启动。
 - Linux 包在 Docker 容器的 Xvfb 虚拟显示中安装测试，尚未在实体 Linux 桌面上运行。
 - macOS 包只在 macOS 27（Apple 芯片）上测试；通用二进制中的 Intel 部分未在 Intel Mac 上运行。
@@ -58,6 +60,9 @@ Windows PowerShell：`Get-FileHash .\NN-Lens-Studio_1.0.0_x64-setup.exe -Algorit
 - **处理不同任务**：分类、目标检测与图像分割，支持手写数字和合成图形数据。
 - **保存工作**：具名本机草稿、结构与布局 JSON 导入/导出。草稿不包含训练权重。
 - **观察结构**：2D 构建与 3D 检查，支持节点拖动、缩放和平移。
+- **逐步演算**：在层详情里逐步重放一个输出元素的计算（卷积乘加、全连接、注意力等），以及单步训练中参数梯度的来源和优化器更新；最后一步与引擎结果逐位一致。
+- **PyTorch 导出**：把当前模型生成 PyTorch 模型代码、训练脚本和权重文件，以及 nn-lens-ir 中间表示；也可以导入 nn-lens-ir 文件。生成 IR 的 Python 工具目前不公开。
+- **数据集审计**：打开本机的多模态检测测试集文件夹（可见光、红外、配准红外、深度、4x 超分），载入多个模型的预测（nn-lens-detset JSON，或每行“类别 cx cy w h 置信度”的提交 zip / txt），把候选模型和基准模型逐框对撞，人工核验分歧框，并导出核验记录、真值补丁和报告。基准只是另一个模型，不当作真值；图片只在本机读取。
 - **运行轨迹诊断**：查看同一模型两次前向的逐模块差异（余弦相似度与相对扰动），找出差异从哪一层开始放大。附带一份合成示例轨迹；生成轨迹的 Python 追踪器目前不公开。
 
 ![运行轨迹诊断：安装包自带的合成示例，右侧是选中调用的逐行余弦分布与 LayerNorm 分解](assets/diagnosis.png)
